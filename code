@@ -1,0 +1,105 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET    -1
+#define OLED_ADDRESS 0x3C
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_ADDRESS);
+
+int red = 10;
+int green = 9;
+int blue = 11;
+
+int redValue = 0;
+int greenValue = 0;
+int blueValue = 0;
+
+int buttonRed = 5;   // Kırmızı buton pin
+int buttonGreen = 3; // Yeşil buton pin
+int buttonBlue = 4;  // Mavi buton pin
+
+int buttonStateRed = HIGH;   // Buton durumu - varsayılan olarak yüksek (serbest bırakılmış)
+int buttonStateGreen = HIGH;
+int buttonStateBlue = HIGH;
+
+int pwmLevels = 5; // Toplam kademe sayısı
+int currentLevelRed = 0; // Şu anki kademe
+int currentLevelGreen = 0;
+int currentLevelBlue = 0;
+
+void setup() {
+  pinMode(red, OUTPUT);
+  pinMode(green, OUTPUT);
+  pinMode(blue, OUTPUT);
+
+  pinMode(buttonRed, INPUT_PULLUP);
+  pinMode(buttonGreen, INPUT_PULLUP);
+  pinMode(buttonBlue, INPUT_PULLUP);
+
+  Serial.begin(9600);
+
+  if(!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDRESS)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+  display.display(); // Clear the buffer
+  delay(2000);  // Pause for 2 seconds
+  display.clearDisplay();   // Clear the display
+}
+
+void loop() {
+  int newButtonStateRed = digitalRead(buttonRed);
+
+  if (newButtonStateRed == LOW && buttonStateRed == HIGH) {
+    currentLevelRed = (currentLevelRed + 1) % pwmLevels;
+    redValue = map(currentLevelRed, 0, pwmLevels - 1, 0, 255);
+    Serial.println("Kirmizi butona basildi. PWM Level: " + String(currentLevelRed));
+    Serial.println("Kirmizi PWM degeri: " + String(redValue));
+    delay(100); // Debouncing için kısa bir gecikme
+  }
+
+  buttonStateRed = newButtonStateRed;
+
+  int newButtonStateGreen = digitalRead(buttonGreen);
+
+  if (newButtonStateGreen == LOW && buttonStateGreen == HIGH) {
+    currentLevelGreen = (currentLevelGreen + 1) % pwmLevels;
+    greenValue = map(currentLevelGreen, 0, pwmLevels - 1, 0, 255);
+    Serial.println("Yesil butona basildi. PWM Level: " + String(currentLevelGreen));
+    Serial.println("Yesil PWM degeri: " + String(greenValue));
+    delay(100);
+  }
+
+  buttonStateGreen = newButtonStateGreen;
+
+  int newButtonStateBlue = digitalRead(buttonBlue);
+
+  if (newButtonStateBlue == LOW && buttonStateBlue == HIGH) {
+    currentLevelBlue = (currentLevelBlue + 1) % pwmLevels;
+    blueValue = map(currentLevelBlue, 0, pwmLevels - 1, 0, 255);
+    Serial.println("Mavi butona basildi. PWM Level: " + String(currentLevelBlue));
+    Serial.println("Mavi PWM degeri: " + String(blueValue));
+    delay(100);
+  }
+
+  buttonStateBlue = newButtonStateBlue;
+
+  analogWrite(red, redValue);
+  analogWrite(green, greenValue);
+  analogWrite(blue, blueValue);
+
+  // OLED Ekranı Güncelleme
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.println("Red:   " + String(redValue));
+  display.println("Green: " + String(greenValue));
+  display.println("Blue:  " + String(blueValue));
+  display.display();
+
+  delay(100);
+}
