@@ -12,7 +12,7 @@
 
 ## Devre Şeması
 
-![WhatsApp Image 2024-01-15 at 15 29 11](https://github.com/recepuysal/Arduino-RGB-LED-Kontrol-Projesi/assets/148240525/2a4911da-e065-4c80-932a-7d27cef4ac72)
+![Schematic_RGB LED_2024-01-15 (2)](https://github.com/recepuysal/Arduino-RGB-LED-Kontrol-Projesi/assets/148240525/3f8cd0fd-b04d-4e1e-b8ef-43ee995550cb)
 
 
 ## Kütüphaneler
@@ -43,7 +43,7 @@ Projeyi çalıştırmak için aşağıdaki kütüphanelere ihtiyaç vardır. Ard
 - OLED SCL: A5
 
 ## Kullanım
-
+![WhatsApp Image 2024-01-15 at 15 29 11](https://github.com/recepuysal/Arduino-RGB-LED-Kontrol-Projesi/assets/148240525/2a4911da-e065-4c80-932a-7d27cef4ac72)
 ![WhatsApp Image 2024-01-15 at 15 28 49](https://github.com/recepuysal/Arduino-RGB-LED-Kontrol-Projesi/assets/148240525/e0f91e9d-ba4a-4fb5-b2a3-db932bd1078e)
 
 Projeyi yükledikten sonra kırmızı, yeşil ve mavi butonlar aracılığıyla RGB LED'lerin renklerini kontrol edebilir ve OLED ekranında güncel renk değerlerini takip edebilirsiniz.
