@@ -5,7 +5,7 @@
 
 - Arduino UNO veya benzeri bir kart
 - RGB LED
-- 3 adet buton
+- 3 adet buton yada Membran (3) Butonlu
 - SSD1306 OLED ekran
 - 3 adet TIP31C Mosfet 
 - Arduino IDE veya uyumlu bir programlama ortamı
